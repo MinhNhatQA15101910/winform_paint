@@ -7,36 +7,36 @@ namespace Paint.Model
     {
         public MyRectangle()
         {
-            name = "Rectangle";
+            Name = "Rectangle";
         }
 
         public override object Clone()
         {
             return new MyRectangle
             {
-                pointHead = pointHead,
-                pointTail = pointTail,
-                contourWidth = contourWidth,
-                isSelected = isSelected,
-                color = color,
-                name = name
+                PointHead = PointHead,
+                PointTail = PointTail,
+                ContourWidth = ContourWidth,
+                IsSelected = IsSelected,
+                Color = Color,
+                Name = Name
             };
         }
 
         public override void DrawShape(Graphics g)
         {
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                if (isFill)
+                if (IsFill)
                 {
-                    using (Brush b = new SolidBrush(color))
+                    using (Brush b = new SolidBrush(Color))
                     {
                         g.FillPath(b, path);
                     }
                 }
                 else
                 {
-                    using (Pen p = new Pen(color, contourWidth))
+                    using (Pen p = new Pen(Color, ContourWidth))
                     {
                         g.DrawPath(p, path);
                     }
@@ -44,18 +44,18 @@ namespace Paint.Model
             }
         }
 
-        public override bool isHit(Point p)
+        public override bool IsHit(Point p)
         {
             bool inside = false;
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                if (isFill)
+                if (IsFill)
                 {
                     inside = path.IsVisible(p);
                 }
                 else
                 {
-                    using (Pen pen = new Pen(color, contourWidth + 3))
+                    using (Pen pen = new Pen(Color, ContourWidth + 3))
                     {
                         inside = path.IsOutlineVisible(p, pen);
                     }
@@ -65,36 +65,36 @@ namespace Paint.Model
             return inside;
         }
 
-        protected override GraphicsPath graphicsPath
+        protected override GraphicsPath GraphicsPath
         {
             get
             {
                 GraphicsPath path = new GraphicsPath();
 
-                if (pointTail.X < pointHead.X && pointTail.Y < pointHead.Y)
+                if (PointTail.X < PointHead.X && PointTail.Y < PointHead.Y)
                 {
                     path.AddRectangle(
                         new Rectangle(
-                            pointTail,
-                            new Size(pointHead.X - pointTail.X, pointHead.Y - pointTail.Y)
+                            PointTail,
+                            new Size(PointHead.X - PointTail.X, PointHead.Y - PointTail.Y)
                             )
                         );
                 }
-                else if (pointHead.X > pointTail.X && pointHead.Y < pointTail.Y)
+                else if (PointHead.X > PointTail.X && PointHead.Y < PointTail.Y)
                 {
                     path.AddRectangle(
                         new Rectangle(
-                            new Point(pointTail.X, pointHead.Y),
-                            new Size(pointHead.X - pointTail.X, pointTail.Y - pointHead.Y)
+                            new Point(PointTail.X, PointHead.Y),
+                            new Size(PointHead.X - PointTail.X, PointTail.Y - PointHead.Y)
                             )
                         );
                 }
-                else if (pointHead.X < pointTail.X && pointHead.Y > pointTail.Y)
+                else if (PointHead.X < PointTail.X && PointHead.Y > PointTail.Y)
                 {
                     path.AddRectangle(
                         new Rectangle(
-                            new Point(pointHead.X, pointTail.Y),
-                            new Size(pointTail.X - pointHead.X, pointHead.Y - pointTail.Y)
+                            new Point(PointHead.X, PointTail.Y),
+                            new Size(PointTail.X - PointHead.X, PointHead.Y - PointTail.Y)
                             )
                         );
                 }
@@ -102,8 +102,8 @@ namespace Paint.Model
                 {
                     path.AddRectangle(
                         new Rectangle(
-                            pointHead,
-                            new Size(pointTail.X - pointHead.X, pointTail.Y - pointHead.Y)
+                            PointHead,
+                            new Size(PointTail.X - PointHead.X, PointTail.Y - PointHead.Y)
                             )
                         );
                 }

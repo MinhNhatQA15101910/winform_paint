@@ -6,50 +6,49 @@ namespace Paint.Model
 {
     public class MyCurve : Shape
     {
-        public List<Point> Points { get; set; }
+        public List<Point> Points { get; set; } = new List<Point>();
 
         public MyCurve()
         {
-            name = "Curve";
-            Points = new List<Point>();
+            Name = "Curve";
         }
         public override object Clone()
         {
             MyCurve curve = new MyCurve
             {
-                pointHead = pointHead,
-                pointTail = pointTail,
-                isSelected = isSelected,
-                name = name,
-                color = color,
-                contourWidth = contourWidth,
+                PointHead = PointHead,
+                PointTail = PointTail,
+                IsSelected = IsSelected,
+                Name = Name,
+                Color = Color,
+                ContourWidth = ContourWidth,
             };
             Points.ForEach(point => curve.Points.Add(point));
             return curve;
         }
         public override void DrawShape(Graphics g)
         {
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                using (Pen pen = new Pen(color, contourWidth))
+                using (Pen pen = new Pen(Color, ContourWidth))
                 {
                     g.DrawPath(pen, path);
                 }
             }
         }
-        public override bool isHit(Point p)
+        public override bool IsHit(Point p)
         {
             bool inside = false;
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                using (Pen pen = new Pen(color, contourWidth + 3))
+                using (Pen pen = new Pen(Color, ContourWidth + 3))
                 {
                     inside = path.IsOutlineVisible(p, pen);
                 }
             }
             return inside;
         }
-        protected override GraphicsPath graphicsPath
+        protected override GraphicsPath GraphicsPath
         {
             get
             {
@@ -67,7 +66,7 @@ namespace Paint.Model
                 Points[i] = new Point(Points[i].X + distance.X, Points[i].Y + distance.Y);
             }
         }
-        public override int isHitControlsPoint(Point p)
+        public override int IsHitControlsPoint(Point p)
         {
             for (int i = 0; i < Points.Count; i++)
             {

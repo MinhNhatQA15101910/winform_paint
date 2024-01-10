@@ -5,9 +5,9 @@ namespace Paint.IPresenter
 {
     public interface IPresenterUpdate
     {
-        void onClickSelectMode();
-        void onClickSelectColor(Color color, Graphics g);
-        void onClickSelectSize(int size);
-        void onClickSelectFill(Button btn, Graphics g);
+        void OnClickSelectMode();
+        void OnClickSelectColor(Color color, Graphics g);
+        void OnClickSelectSize(int size);
+        void OnClickSelectFill(Button btn, Graphics g);
     }
 }

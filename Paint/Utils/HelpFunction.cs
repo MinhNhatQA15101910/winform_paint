@@ -17,28 +17,24 @@ namespace Paint.Utils
         {
             if (a.X > b.X)
             {
-                int temp = a.X;
-                a.X = b.X;
-                b.X = temp;
+                (b.X, a.X) = (a.X, b.X);
             }
             if (a.Y > b.Y)
             {
-                int temp = a.Y;
-                a.Y = b.Y;
-                b.Y = temp;
+                (b.Y, a.Y) = (a.Y, b.Y);
             }
             return new Rectangle(a.X, a.Y, b.X - a.X, b.Y - a.Y);
         }
 
-        public static bool isInside(Shape shape, Point p)
+        public static bool IsInside(Shape shape, Point p)
         {
             if (shape is MyPen)
             {
                 MyPen pen = shape as MyPen;
-                if (pen.isEraser) return false;
+                if (pen.IsEraser) return false;
                 return true;
             }
-            return shape.isHit(p);
+            return shape.IsHit(p);
         }
     }
 }

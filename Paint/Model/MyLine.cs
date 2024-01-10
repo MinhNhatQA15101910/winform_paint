@@ -3,61 +3,61 @@ using System.Drawing.Drawing2D;
 
 namespace Paint.Model
 {
-    public class MyLine:Shape
+    public class MyLine : Shape
     {
         public MyLine()
         {
-            name = "line";
+            Name = "line";
         }
         public override object Clone()
         {
             return new MyLine
             {
-                pointHead = pointHead,
-                pointTail = pointTail,
-                contourWidth = contourWidth,
-                isSelected = isSelected,
-                color = color,
-                name = name
+                PointHead = PointHead,
+                PointTail = PointTail,
+                ContourWidth = ContourWidth,
+                IsSelected = IsSelected,
+                Color = Color,
+                Name = Name
             };
         }
         public override void DrawShape(Graphics g)
         {
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                using (Pen pen = new Pen(color, contourWidth))
+                using (Pen pen = new Pen(Color, ContourWidth))
                 {
                     g.DrawPath(pen, path);
                 }
             }
         }
-        protected override GraphicsPath graphicsPath
+        protected override GraphicsPath GraphicsPath
         {
             get
             {
                 GraphicsPath path = new GraphicsPath();
-                path.AddLine(pointHead, pointTail);
+                path.AddLine(PointHead, PointTail);
                 return path;
             }
         }
-        public override bool isHit(Point p)
+        public override bool IsHit(Point p)
         {
             bool inside = false;
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                using (Pen pen = new Pen(color, contourWidth + 3))
+                using (Pen pen = new Pen(Color, ContourWidth + 3))
                 {
                     inside = path.IsOutlineVisible(p, pen);
                 }
             }
             return inside;
         }
-        public override int isHitControlsPoint(Point p)
+        public override int IsHitControlsPoint(Point p)
         {
             GraphicsPath path = new GraphicsPath();
-            path.AddRectangle(new Rectangle(pointHead.X - 4, pointHead.Y - 4, 8, 8));
+            path.AddRectangle(new Rectangle(PointHead.X - 4, PointHead.Y - 4, 8, 8));
             if (path.IsVisible(p)) return 0;
-            path.AddRectangle(new Rectangle(pointTail.X - 4, pointTail.Y - 4, 8, 8));
+            path.AddRectangle(new Rectangle(PointTail.X - 4, PointTail.Y - 4, 8, 8));
             if (path.IsVisible(p)) return 7;
             return -1;
         }

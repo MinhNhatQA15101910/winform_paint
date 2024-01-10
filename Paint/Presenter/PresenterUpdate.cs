@@ -15,39 +15,39 @@ namespace Paint.Presenter
         public PresenterUpdate(IViewPaint viewPaint)
         {
             this.viewPaint = viewPaint;
-            dataManager = DataManager.getInstance();
+            dataManager = DataManager.GetInstance();
         }
 
-        public void onClickSelectMode()
+        public void OnClickSelectMode()
         {
-            dataManager.offAllShapeSelected();
+            dataManager.OffAllShapeSelected();
             viewPaint.RefreshDrawing();
-            dataManager.currentShape = CurrentShapeStatus.Void;
+            dataManager.CurrentShape = CurrentShapeStatus.Void;
             viewPaint.SetCursor(Cursors.Default);
         }
 
-        public void onClickSelectColor(Color color, Graphics g)
+        public void OnClickSelectColor(Color color, Graphics g)
         {
-            dataManager.colorCurrent = color;
+            dataManager.ColorCurrent = color;
             viewPaint.SetColor(color);
-            foreach (Shape item in dataManager.shapeList)
+            foreach (Shape item in dataManager.ShapeList)
             {
-                if (item.isSelected)
+                if (item.IsSelected)
                 {
-                    item.color = color;
+                    item.Color = color;
                     viewPaint.SetDrawing(item, g);
                 }
             }
         }
 
-        public void onClickSelectSize(int size)
+        public void OnClickSelectSize(int size)
         {
-            dataManager.lineSize = size;
+            dataManager.LineSize = size;
         }
 
-        public void onClickSelectFill(Button btn, Graphics g)
+        public void OnClickSelectFill(Button btn, Graphics g)
         {
-            dataManager.isFill = !dataManager.isFill;
+            dataManager.IsFill = !dataManager.IsFill;
             if (btn.BackColor.Equals(Color.Yellow))
                 viewPaint.SetColor(btn, Color.Black);
             else

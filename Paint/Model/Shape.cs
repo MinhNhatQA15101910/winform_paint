@@ -8,13 +8,13 @@ namespace Paint.Model
 {
     public abstract class Shape : ICloneable
     {
-        public string name { get; set; }
-        public Point pointHead { get; set; }
-        public Point pointTail { get; set; }
-        public bool isSelected { get; set; }
-        public int contourWidth { get; set; }
-        public bool isFill { get; set; }
-        public Color color { get; set; }
+        public string Name { get; set; }
+        public Point PointHead { get; set; }
+        public Point PointTail { get; set; }
+        public bool IsSelected { get; set; }
+        public int ContourWidth { get; set; }
+        public bool IsFill { get; set; }
+        public Color Color { get; set; }
 
         public abstract object Clone();
 
@@ -22,32 +22,32 @@ namespace Paint.Model
 
         public virtual void MoveShape(Point distance)
         {
-            pointHead = new Point(pointHead.X + distance.X, pointHead.Y + distance.Y);
-            pointTail = new Point(pointTail.X + distance.X, pointTail.Y + distance.Y);
+            PointHead = new Point(PointHead.X + distance.X, PointHead.Y + distance.Y);
+            PointTail = new Point(PointTail.X + distance.X, PointTail.Y + distance.Y);
         }
 
-        public abstract bool isHit(Point p);
+        public abstract bool IsHit(Point p);
 
-        protected abstract GraphicsPath graphicsPath { get; }
+        protected abstract GraphicsPath GraphicsPath { get; }
 
-        public virtual bool isCollideWithRegion(Rectangle rectangle)
+        public virtual bool IsCollideWithRegion(Rectangle rectangle)
         {
-            return !(pointTail.X <= rectangle.X || 
-                    pointHead.X >= rectangle.X + rectangle.Width || 
-                    pointTail.Y <= rectangle.Y || 
-                    pointHead.Y >= rectangle.Y + rectangle.Height);
+            return !(PointTail.X <= rectangle.X ||
+                    PointTail.X >= rectangle.X + rectangle.Width ||
+                    PointTail.Y <= rectangle.Y ||
+                    PointTail.Y >= rectangle.Y + rectangle.Height);
         }
 
         public Rectangle GetRectangle()
         {
             return new Rectangle(
-                pointHead.X, 
-                pointHead.Y, 
-                pointTail.X - pointHead.X, 
-                pointTail.Y - pointHead.Y
+                PointHead.X,
+                PointHead.Y,
+                PointTail.X - PointHead.X, 
+                PointTail.Y - PointHead.Y
                 );
         }
-        public virtual int isHitControlsPoint(Point p)
+        public virtual int IsHitControlsPoint(Point p)
         {
             List<Point> points = FindRegion.GetControlPoints(this);
             for (int i = 0; i < 8; i++)
@@ -63,23 +63,21 @@ namespace Paint.Model
         {
             if (index == 0 || index == 1 || index == 3)
             {
-                Point point = pointHead;
-                pointHead = pointTail;
-                pointTail = point;
+                (PointTail, PointHead) = (PointHead, PointTail);
             }
             if (index == 2)
             {
-                int a = pointTail.X;
-                int b = pointHead.Y;
-                pointHead = new Point(pointHead.X, pointTail.Y);
-                pointTail = new Point(a, b);
+                int a = PointTail.X;
+                int b = PointHead.Y;
+                PointHead = new Point(PointHead.X, PointTail.Y);
+                PointTail = new Point(a, b);
             }
             if (index == 5)
             {
-                int a = pointHead.X;
-                int b = pointTail.Y;
-                pointHead = new Point(pointTail.X, pointHead.Y);
-                pointTail = new Point(a, b);
+                int a = PointHead.X;
+                int b = PointTail.Y;
+                PointHead = new Point(PointTail.X, PointHead.Y);
+                PointTail = new Point(a, b);
             }
         }
         public virtual void MoveControlPoint(Point pointCurrent, Point previous, int index)
@@ -88,15 +86,15 @@ namespace Paint.Model
             int deltaY = pointCurrent.Y - previous.Y;
             if (index == 1 || index == 6)
             {
-                pointTail = new Point(pointTail.X, pointTail.Y + deltaY);
+                PointTail = new Point(PointTail.X, PointTail.Y + deltaY);
             }
             else if (index == 3 || index == 4)
             {
-                pointTail = new Point(pointTail.X + deltaX, pointTail.Y);
+                PointTail = new Point(PointTail.X + deltaX, PointTail.Y);
             }
             else
             {
-                pointTail = pointCurrent;
+                PointTail = pointCurrent;
             }
         }
     }

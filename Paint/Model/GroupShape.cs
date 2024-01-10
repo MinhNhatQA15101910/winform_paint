@@ -6,82 +6,81 @@ using System.Drawing.Drawing2D;
 
 namespace Paint.Model
 {
-    // A group of many shapes
-    public class GroupShape:Shape, IEnumerable
+    // A group of many Shapes
+    public class GroupShape : Shape, IEnumerable
     {
-        private readonly List<Shape> shapes;
+        private readonly List<Shape> Shapes = new List<Shape>();
 
         public GroupShape()
         {
-            name = "Group";
-            shapes = new List<Shape>();
+            Name = "Group";
         }
 
         public Shape this[int index]
         {
             get
             {
-                return shapes[index];
+                return Shapes[index];
             }
             set
             {
-                shapes[index] = value;
+                Shapes[index] = value;
             }
         }
-        private GraphicsPath[] graphicsPaths
+        private GraphicsPath[] GraphicsPaths
         {
             get
             {
-                GraphicsPath[] paths = new GraphicsPath[shapes.Count];
+                GraphicsPath[] paths = new GraphicsPath[Shapes.Count];
 
-                for (int i = 0; i < shapes.Count; i++)
+                for (int i = 0; i < Shapes.Count; i++)
                 {
                     GraphicsPath path = new GraphicsPath();
-                    if (shapes[i] is MyLine)
+                    if (Shapes[i] is MyLine)
                     {
-                        MyLine line = shapes[i] as MyLine;
-                        path.AddLine(line.pointHead, line.pointTail);
+                        MyLine line = Shapes[i] as MyLine;
+                        path.AddLine(line.PointHead, line.PointTail);
                     }
-                    else if (shapes[i] is MyCurve)
+                    else if (Shapes[i] is MyCurve)
                     {
-                        MyCurve curve = shapes[i] as MyCurve;
+                        MyCurve curve = Shapes[i] as MyCurve;
                         path.AddCurve(curve.Points.ToArray());
                     }
-                    else if (shapes[i] is MyEllipse)
+                    else if (Shapes[i] is MyEllipse)
                     {
-                        MyEllipse ellipse = shapes[i] as MyEllipse;
+                        MyEllipse ellipse = Shapes[i] as MyEllipse;
                         path.AddEllipse(
                             new Rectangle(
-                                ellipse.pointHead.X, 
-                                ellipse.pointHead.Y, 
-                                ellipse.pointTail.X - ellipse.pointHead.X, 
-                                ellipse.pointTail.Y - ellipse.pointHead.Y
+                                ellipse.PointHead.X, 
+                                ellipse.PointHead.Y, 
+                                ellipse.PointTail.X - ellipse.PointHead.X, 
+                                ellipse.PointTail.Y - ellipse.PointHead.Y
                             )
                         );
                     }
-                    else if (shapes[i] is MyRectangle)
+                    else if (Shapes[i] is MyRectangle)
                     {
-                        MyRectangle rect = shapes[i] as MyRectangle;
+                        MyRectangle rect = Shapes[i] as MyRectangle;
                         path.AddRectangle(
                             new Rectangle(
-                                rect.pointHead.X, 
-                                rect.pointHead.Y,
-                                rect.pointTail.X - rect.pointHead.X,
-                                rect.pointTail.Y - rect.pointHead.Y
+                                rect.PointHead.X, 
+                                rect.PointHead.Y,
+                                rect.PointTail.X - rect.PointHead.X,
+                                rect.PointTail.Y - rect.PointHead.Y
                                 )
                             );
                     }
-                    else if (shapes[i] is MyPolygon)
+                    else if (Shapes[i] is MyPolygon)
                     {
-                        MyPolygon polygon = shapes[i] as MyPolygon;
+                        MyPolygon polygon = Shapes[i] as MyPolygon;
                         path.AddPolygon(polygon.Points.ToArray());
                     }
-                    else if (shapes[i] is GroupShape)
+                    else if (Shapes[i] is GroupShape)
                     {
-                        GroupShape group = shapes[i] as GroupShape;
-                        for (int j = 0; j < group.graphicsPaths.Length; j++)
+                        GroupShape group = Shapes[i] as GroupShape;
+                        for (int j = 0; j < group.GraphicsPaths.Length; j++)
                         {
-                            path.AddPath(group.graphicsPaths[j], false);
+                            path.AddPath(group.GraphicsPaths[j], false);
                         }
                     }
                     paths[i] = path;
@@ -91,57 +90,57 @@ namespace Paint.Model
         }
         public void AddShape(Shape shape)
         {
-            shapes.Add(shape);
+            Shapes.Add(shape);
         }
         public override object Clone()
         {
             GroupShape group = new GroupShape
             {
-                pointHead = pointHead,
-                pointTail = pointTail,
-                isSelected = isSelected,
-                name = name,
-                color = color,
-                contourWidth = contourWidth,
+                PointHead = PointHead,
+                PointTail = PointTail,
+                IsSelected = IsSelected,
+                Name = Name,
+                Color = Color,
+                ContourWidth = ContourWidth,
             };
-            for (int i = 0; i < shapes.Count; i++)
+            for (int i = 0; i < Shapes.Count; i++)
             {
-                group.shapes.Add(shapes[i].Clone() as Shape);
+                group.Shapes.Add(Shapes[i].Clone() as Shape);
             }
             return group;
         }
         public override void DrawShape(Graphics g)
         {
-            GraphicsPath[] paths = graphicsPaths;
+            GraphicsPath[] paths = GraphicsPaths;
             for (int i = 0; i < paths.Length; i++)
             {
                 using (GraphicsPath path = paths[i])
                 {
-                    if (shapes[i] is MyRectangle || shapes[i] is MyEllipse || shapes[i] is MyPolygon)
+                    if (Shapes[i] is MyRectangle || Shapes[i] is MyEllipse || Shapes[i] is MyPolygon)
                     {
-                        if (shapes[i].isFill)
+                        if (Shapes[i].IsFill)
                         {
-                            using (Brush brush = new SolidBrush(shapes[i].color))
+                            using (Brush brush = new SolidBrush(Shapes[i].Color))
                             {
                                 g.FillPath(brush, path);
                             }
                         }
                         else
                         {
-                            using (Pen pen = new Pen(shapes[i].color, shapes[i].contourWidth))
+                            using (Pen pen = new Pen(Shapes[i].Color, Shapes[i].ContourWidth))
                             {
                                 g.DrawPath(pen, path);
                             }
                         }
                     }
-                    else if (shapes[i] is GroupShape)
+                    else if (Shapes[i] is GroupShape)
                     {
-                        GroupShape group = shapes[i] as GroupShape;
+                        GroupShape group = Shapes[i] as GroupShape;
                         group.DrawShape(g);
                     }
                     else
                     {
-                        using (Pen pen = new Pen(shapes[i].color, shapes[i].contourWidth))
+                        using (Pen pen = new Pen(Shapes[i].Color, Shapes[i].ContourWidth))
                         {
                             g.DrawPath(pen, path);
                         }
@@ -149,16 +148,16 @@ namespace Paint.Model
                 }
             }
         }
-        public override bool isHit(Point p)
+        public override bool IsHit(Point p)
         {
-            GraphicsPath[] paths = graphicsPaths;
+            GraphicsPath[] paths = GraphicsPaths;
             for (int i = 0; i < paths.Length; i++)
             {
                 using (GraphicsPath path = paths[i])
                 {
-                    if (shapes[i] is MyRectangle || shapes[i] is MyEllipse) 
+                    if (Shapes[i] is MyRectangle || Shapes[i] is MyEllipse) 
                     {
-                        if (((MyRectangle)shapes[i]).isFill)
+                        if (((MyRectangle)Shapes[i]).IsFill)
                         {
                             using (Brush brush = new SolidBrush(Color.Black))
                             {
@@ -170,7 +169,7 @@ namespace Paint.Model
                         }
                         else
                         {
-                            using (Pen pen = new Pen(Color.Black, contourWidth + 3))
+                            using (Pen pen = new Pen(Color.Black, ContourWidth + 3))
                             {
                                 if (path.IsOutlineVisible(p, pen))
                                 {
@@ -179,9 +178,9 @@ namespace Paint.Model
                             }
                         }
                     }
-                    else if (!(shapes[i] is GroupShape))
+                    else if (!(Shapes[i] is GroupShape))
                     {
-                        using (Pen pen = new Pen(Color.Black, contourWidth + 3))
+                        using (Pen pen = new Pen(Color.Black, ContourWidth + 3))
                         {
                             if (path.IsOutlineVisible(p, pen))
                             {
@@ -189,42 +188,42 @@ namespace Paint.Model
                             }
                         }
                     }
-                    else if (shapes[i] is GroupShape)
+                    else if (Shapes[i] is GroupShape)
                     {
-                        GroupShape group = shapes[i] as GroupShape;
-                        return group.isHit(p);
+                        GroupShape group = Shapes[i] as GroupShape;
+                        return group.IsHit(p);
                     }
                 }
             }
             return false;
         }
-        protected override GraphicsPath graphicsPath
+        protected override GraphicsPath GraphicsPath
         {
             get { throw new NotImplementedException(); }
         }
         public IEnumerator GetEnumerator()
         {
-            return shapes.GetEnumerator();
+            return Shapes.GetEnumerator();
         }
         public int Count
         {
             get
             {
-                return shapes.Count;
+                return Shapes.Count;
             }
         }
         public override void MoveShape(Point distance)
         {
-            for (int i = 0; i < shapes.Count; i++)
+            for (int i = 0; i < Shapes.Count; i++)
             {
-                if (shapes[i] is GroupShape)
+                if (Shapes[i] is GroupShape)
                 {
-                    GroupShape group = shapes[i] as GroupShape;
+                    GroupShape group = Shapes[i] as GroupShape;
                     group.MoveShape(distance);
                 }
                 else
                 {
-                    shapes[i].MoveShape(distance);
+                    Shapes[i].MoveShape(distance);
                 }
             }
             base.MoveShape(distance);

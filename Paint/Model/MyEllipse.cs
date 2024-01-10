@@ -8,55 +8,55 @@ namespace Paint.Model
     {
         public MyEllipse()
         {
-            name = "Ellipse";
+            Name = "Ellipse";
         }
 
         public override object Clone()
         {
             return new MyEllipse
             {
-                pointHead = pointHead,
-                pointTail = pointTail,
-                contourWidth = contourWidth,
-                isSelected = isSelected,
-                color = color,
-                name = name
+                PointHead = PointHead,
+                PointTail = PointTail,
+                ContourWidth = ContourWidth,
+                IsSelected = IsSelected,
+                Color = Color,
+                Name = Name
             };
         }
 
-        protected override GraphicsPath graphicsPath
+        protected override GraphicsPath GraphicsPath
         {
             get
             {
                 GraphicsPath path = new GraphicsPath();
 
-                if (pointTail.X < pointHead.X && pointTail.Y < pointHead.Y)
+                if (PointTail.X < PointHead.X && PointTail.Y < PointHead.Y)
                 {
                     path.AddEllipse(
                         new Rectangle(
-                            pointTail.X,
-                            pointTail.Y,
-                            pointHead.X - pointTail.X,
-                            pointHead.Y - pointTail.Y
+                            PointTail.X,
+                            PointTail.Y,
+                            PointHead.X - PointTail.X,
+                            PointHead.Y - PointTail.Y
                             )
                         );
                 }
-                else if (pointHead.X > pointTail.X && pointHead.Y < pointTail.Y)
+                else if (PointHead.X > PointTail.X && PointHead.Y < PointTail.Y)
                 {
-                    path.AddEllipse(HelpFunction.GetRectangle(pointHead, pointTail));
+                    path.AddEllipse(HelpFunction.GetRectangle(PointHead, PointTail));
                 }
-                else if (pointHead.X < pointTail.X && pointHead.Y > pointTail.Y)
+                else if (PointHead.X < PointTail.X && PointHead.Y > PointTail.Y)
                 {
-                    path.AddEllipse(HelpFunction.GetRectangle(pointHead, pointTail));
+                    path.AddEllipse(HelpFunction.GetRectangle(PointHead, PointTail));
                 }
                 else
                 {
                     path.AddEllipse(
                         new Rectangle(
-                            pointHead.X, 
-                            pointHead.Y, 
-                            pointTail.X - pointHead.X, 
-                            pointTail.Y - pointHead.Y
+                            PointHead.X, 
+                            PointHead.Y, 
+                            PointTail.X - PointHead.X, 
+                            PointTail.Y - PointHead.Y
                             )
                         );
                 }

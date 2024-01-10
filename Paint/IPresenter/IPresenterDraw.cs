@@ -6,17 +6,16 @@ namespace Paint.IPresenter
     public interface IPresenterDraw
     {
         void GetDrawing(Graphics g);
-        void onClickMouseDown(Point p);
-        void onClickMouseMove(Point p);
-        void onClickMouseUp();
-        void onClickDrawLine();
-        void onClickDrawRectangle();
-        void onClickDrawEllipse();
-        void onClickDrawBezier();
-        void onClickDrawPolygon();
-        void onClickDrawPen();
-        void onClickDrawEraser();
-        void onClickStopDrawing(MouseButtons mouse);
-
+        void OnClickMouseDown(Point p);
+        void OnClickMouseMove(Point p);
+        void OnClickMouseUp();
+        void OnClickDrawLine();
+        void OnClickDrawRectangle();
+        void OnClickDrawEllipse();
+        void OnClickDrawBezier();
+        void OnClickDrawPolygon();
+        void OnClickDrawPen();
+        void OnClickDrawEraser();
+        void OnClickStopDrawing(MouseButtons mouse);
     }
 }

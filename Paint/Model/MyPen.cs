@@ -2,11 +2,11 @@
 {
     public class MyPen:MyCurve
     {
-        public bool isEraser { get; set; }
+        public bool IsEraser { get; set; }
 
         public MyPen()
         {
-            name = "Pen";
+            Name = "Pen";
         }
     }
 }

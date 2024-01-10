@@ -4,48 +4,49 @@ using System.Drawing.Drawing2D;
 
 namespace Paint.Model
 {
-    public class MyPolygon:Shape
+    public class MyPolygon : Shape
     {
-        public List<Point> Points { get; set; }
+        public List<Point> Points { get; set; } = new List<Point>();
 
         public MyPolygon()
         {
-            name = "Polygon";
-            Points = new List<Point>();
+            Name = "Polygon";
         }
+
         public override object Clone()
         {
             MyPolygon polygon = new MyPolygon
             {
-                pointHead = pointHead,
-                pointTail = pointTail,
-                isSelected = isSelected,
-                name = name,
-                color = color,
-                contourWidth = contourWidth,
-                isFill = isFill
+                PointHead = PointHead,
+                PointTail = PointTail,
+                IsSelected = IsSelected,
+                Name = Name,
+                Color = Color,
+                ContourWidth = ContourWidth,
+                IsFill = IsFill
             };
             Points.ForEach(point => polygon.Points.Add(point));
             return polygon;
         }
+
         public override void DrawShape(Graphics g)
         {
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                if (!isFill)
+                if (!IsFill)
                 {
-                    using (Pen pen = new Pen(color, contourWidth))
+                    using (Pen pen = new Pen(Color, ContourWidth))
                     {
                         g.DrawPath(pen, path);
                     }
                 }
                 else
                 {
-                    using (Brush brush = new SolidBrush(color))
+                    using (Brush brush = new SolidBrush(Color))
                     {
                         if (Points.Count < 3)
                         {
-                            using (Pen pen = new Pen(color, contourWidth))
+                            using (Pen pen = new Pen(Color, ContourWidth))
                             {
                                 g.DrawPath(pen, path);
                             }
@@ -58,14 +59,14 @@ namespace Paint.Model
                 }
             }
         }
-        public override bool isHit(Point p)
+        public override bool IsHit(Point p)
         {
             bool inside = false;
-            using (GraphicsPath path = graphicsPath)
+            using (GraphicsPath path = GraphicsPath)
             {
-                if (!isFill)
+                if (!IsFill)
                 {
-                    using (Pen pen = new Pen(color, contourWidth + 3))
+                    using (Pen pen = new Pen(Color, ContourWidth + 3))
                     {
                         inside = path.IsOutlineVisible(p, pen);
                     }
@@ -77,7 +78,7 @@ namespace Paint.Model
             }
             return inside;
         }
-        protected override GraphicsPath graphicsPath
+        protected override GraphicsPath GraphicsPath
         {
             get
             {
@@ -102,7 +103,7 @@ namespace Paint.Model
                 Points[i] = new Point(Points[i].X + distance.X, Points[i].Y + distance.Y);
             }
         }
-        public override int isHitControlsPoint(Point p)
+        public override int IsHitControlsPoint(Point p)
         {
             for (int i = 0; i < Points.Count; i++)
             {

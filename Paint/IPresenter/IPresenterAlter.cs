@@ -5,26 +5,26 @@ namespace Paint.IPresenter
     public interface IPresenterAlter
     {
         // Draw Group
-        void onClickDrawGroup();
+        void OnClickDrawGroup();
         // Draw Ungroup
-        void onClickDrawUngroup();
+        void OnClickDrawUngroup();
         // Delete shape
-        void onClickDeleteShape();
+        void OnClickDeleteShape();
         // Copy shape
-        void onClickCopyShape();
+        void OnClickCopyShape();
         // Cut shape
-        void onClickCutShape();
+        void OnClickCutShape();
         // Paste shape
-        void onClickPasteShape();
+        void OnClickPasteShape();
         // Clear
-        void onClickClearAll(PictureBox pictureBox);
+        void OnClickClearAll(PictureBox pictureBox);
         // Save Image
-        void onClickSaveImage(PictureBox pictureBox);
+        void OnClickSaveImage(PictureBox pictureBox);
         // Open Image
-        void onClickOpenImage(PictureBox pictureBox);
+        void OnClickOpenImage(PictureBox pictureBox);
         // Create new Image
-        void onClickNewImage(PictureBox pictureBox);
+        void OnClickNewImage(PictureBox pictureBox);
         // Keyboard shortcut
-        void onUseKeyStrokes(PictureBox pictureBox, Keys key);
+        void OnUseKeyStrokes(Keys key);
     }
 }

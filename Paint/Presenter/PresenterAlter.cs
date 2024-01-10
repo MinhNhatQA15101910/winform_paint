@@ -16,109 +16,109 @@ namespace Paint.Presenter
         public PresenterAlter(IViewPaint viewPaint)
         {
             this.viewPaint = viewPaint;
-            dataManager = DataManager.getInstance();
+            dataManager = DataManager.GetInstance();
         }
 
-        public void onClickDrawGroup()
+        public void OnClickDrawGroup()
         {
             // Find selected images, if number of images > 1 => group
-            if (dataManager.shapeList.Count(shape => shape.isSelected) > 1)
+            if (dataManager.ShapeList.Count(shape => shape.IsSelected) > 1)
             {
                 GroupShape group = new GroupShape();
-                for (int i = 0; i < dataManager.shapeList.Count; i++)
+                for (int i = 0; i < dataManager.ShapeList.Count; i++)
                 {
-                    if (dataManager.shapeList[i].isSelected)
+                    if (dataManager.ShapeList[i].IsSelected)
                     {
-                        group.AddShape(dataManager.shapeList[i]);
-                        dataManager.shapeList.RemoveAt(i--);
+                        group.AddShape(dataManager.ShapeList[i]);
+                        dataManager.ShapeList.RemoveAt(i--);
                     }
                 }
                 FindRegion.SetPointHeadTail(group);
-                group.isSelected = true;
-                dataManager.shapeList.Add(group);
+                group.IsSelected = true;
+                dataManager.ShapeList.Add(group);
                 viewPaint.RefreshDrawing();
             }
 
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickDrawUngroup()
+        public void OnClickDrawUngroup()
         {
             // Find selected GroupShape
-            if (dataManager.shapeList.Find(shape => shape.isSelected) is GroupShape)
+            if (dataManager.ShapeList.Find(shape => shape.IsSelected) is GroupShape)
             {
-                GroupShape group = dataManager.shapeList.Find(shape => shape.isSelected) as GroupShape;
+                GroupShape group = dataManager.ShapeList.Find(shape => shape.IsSelected) as GroupShape;
                 foreach (Shape shape in group)
                 {
-                    dataManager.shapeList.Add(shape);
+                    dataManager.ShapeList.Add(shape);
                 }
-                dataManager.shapeList.Remove(group);
+                dataManager.ShapeList.Remove(group);
             }
 
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickDeleteShape()
+        public void OnClickDeleteShape()
         {
-            for (int i = 0; i < dataManager.shapeList.Count; i++)
+            for (int i = 0; i < dataManager.ShapeList.Count; i++)
             {
-                if (dataManager.shapeList[i].isSelected)
+                if (dataManager.ShapeList[i].IsSelected)
                 {
-                    dataManager.shapeList.RemoveAt(i--);
+                    dataManager.ShapeList.RemoveAt(i--);
                 }
             }
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickCopyShape()
+        public void OnClickCopyShape()
         {
             dataManager.RemoveSavedShapes();
-            for (int i = 0; i < dataManager.shapeList.Count; i++)
+            for (int i = 0; i < dataManager.ShapeList.Count; i++)
             {
-                if (dataManager.shapeList[i].isSelected)
+                if (dataManager.ShapeList[i].IsSelected)
                 {
-                    dataManager.AddSavedShapes(dataManager.shapeList[i].Clone() as Shape);
+                    dataManager.AddSavedShapes(dataManager.ShapeList[i].Clone() as Shape);
                 }
             }
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickCutShape()
+        public void OnClickCutShape()
         {
             dataManager.RemoveSavedShapes();
-            for (int i = 0; i < dataManager.shapeList.Count; i++)
+            for (int i = 0; i < dataManager.ShapeList.Count; i++)
             {
-                if (dataManager.shapeList[i].isSelected)
+                if (dataManager.ShapeList[i].IsSelected)
                 {
-                    dataManager.AddSavedShapes(dataManager.shapeList[i].Clone() as Shape);
-                    dataManager.shapeList.RemoveAt(i--);
+                    dataManager.AddSavedShapes(dataManager.ShapeList[i].Clone() as Shape);
+                    dataManager.ShapeList.RemoveAt(i--);
                 }
             }
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickPasteShape()
+        public void OnClickPasteShape()
         {
 
-            for (int i = 0; i < dataManager.savedShapes.Count; i++)
+            for (int i = 0; i < dataManager.SavedShapes.Count; i++)
             {
-                Shape shape = dataManager.savedShapes[i].Clone() as Shape;
+                Shape shape = dataManager.SavedShapes[i].Clone() as Shape;
                 dataManager.AddEntity(shape);
-                dataManager.shapeList[dataManager.shapeList.Count - 1].MoveShape(new Point(20, 20));
+                dataManager.ShapeList[dataManager.ShapeList.Count - 1].MoveShape(new Point(20, 20));
             }
-            dataManager.offAllShapeSelected();
+            dataManager.OffAllShapeSelected();
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickClearAll(PictureBox pictureBox)
+        public void OnClickClearAll(PictureBox pictureBox)
         {
             pictureBox.Image = null;
-            dataManager.shapeList.Clear();
-            dataManager.isNotNone = false;
+            dataManager.ShapeList.Clear();
+            dataManager.IsNotNone = false;
             viewPaint.RefreshDrawing();
         }
 
-        public void onClickSaveImage(PictureBox pictureBox)
+        public void OnClickSaveImage(PictureBox pictureBox)
         {
             SaveFileDialog saveFile = new SaveFileDialog();
             Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
@@ -130,45 +130,47 @@ namespace Paint.Presenter
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 bitmap.Save(saveFile.FileName);
-                dataManager.isSave = true;
+                dataManager.IsSave = true;
             }
         }
 
-        public void onClickOpenImage(PictureBox pictureBox)
+        public void OnClickOpenImage(PictureBox pictureBox)
         {
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Image Files(*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp";
-            openFile.CheckFileExists = true;
-            openFile.CheckPathExists = true;
+            OpenFileDialog openFile = new OpenFileDialog
+            {
+                Filter = "Image Files(*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp",
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 pictureBox.Image = new Bitmap(openFile.FileName);
             }
         }
 
-        public void onClickNewImage(PictureBox pictureBox)
+        public void OnClickNewImage(PictureBox pictureBox)
         {
-            if (dataManager.isNotNone && MessageBox.Show("You have not saved this image. Do you want to save it?",
+            if (dataManager.IsNotNone && MessageBox.Show("You have not saved this image. Do you want to save it?",
                      "Notification",
                      MessageBoxButtons.YesNo,
                      MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                onClickSaveImage(pictureBox);
+                OnClickSaveImage(pictureBox);
             }
-            onClickClearAll(pictureBox);
+            OnClickClearAll(pictureBox);
         }
 
-        public void onUseKeyStrokes(PictureBox pictureBox, Keys key)
+        public void OnUseKeyStrokes(Keys key)
         {
             if (key == Keys.A && Control.ModifierKeys.HasFlag(Keys.Control))
             {
-                for (int i = 0; i < dataManager.shapeList.Count; i++)
-                    dataManager.shapeList[i].isSelected = true;
+                for (int i = 0; i < dataManager.ShapeList.Count; i++)
+                    dataManager.ShapeList[i].IsSelected = true;
                 viewPaint.RefreshDrawing();
             }
             if (key == Keys.Delete)
             {
-                onClickDeleteShape();
+                OnClickDeleteShape();
             }
         }
     }
