@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Paint
 {
-    interface ViewPaint
+    public interface IViewPaint
     {
         void RefreshDrawing();
         void SetCursor(Cursor cursor);

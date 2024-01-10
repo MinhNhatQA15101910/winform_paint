@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Paint.Utils
 {
-    public class FindRegion
+    public static class FindRegion
     {
         // Set pointHead and pointTail for GroupShape
         public static void SetPointHeadTail(GroupShape group)
@@ -61,7 +61,7 @@ namespace Paint.Utils
         {
             int minX = int.MaxValue, minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
-            curve.points.ForEach(p =>
+            curve.Points.ForEach(p =>
             {
                 if (minX > p.X) minX = p.X;
                 if (minY > p.Y) minY = p.Y;
@@ -77,7 +77,7 @@ namespace Paint.Utils
         {
             int minX = int.MaxValue, minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
-            polygon.points.ForEach(p =>
+            polygon.Points.ForEach(p =>
             {
                 if (minX > p.X) minX = p.X;
                 if (minY > p.Y) minY = p.Y;
@@ -93,7 +93,7 @@ namespace Paint.Utils
         {
             int minX = int.MaxValue, minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
-            pen.points.ForEach(p =>
+            pen.Points.ForEach(p =>
             {
                 if (minX > p.X) minX = p.X;
                 if (minY > p.Y) minY = p.Y;

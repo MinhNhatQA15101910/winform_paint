@@ -9,7 +9,7 @@ namespace Paint.Model
     // A group of many shapes
     public class GroupShape:Shape, IEnumerable
     {
-        private List<Shape> shapes;
+        private readonly List<Shape> shapes;
 
         public GroupShape()
         {
@@ -39,17 +39,17 @@ namespace Paint.Model
                     GraphicsPath path = new GraphicsPath();
                     if (shapes[i] is MyLine)
                     {
-                        MyLine line = (MyLine)shapes[i];
+                        MyLine line = shapes[i] as MyLine;
                         path.AddLine(line.pointHead, line.pointTail);
                     }
                     else if (shapes[i] is MyCurve)
                     {
-                        MyCurve curve = (MyCurve)shapes[i];
-                        path.AddCurve(curve.points.ToArray());
+                        MyCurve curve = shapes[i] as MyCurve;
+                        path.AddCurve(curve.Points.ToArray());
                     }
                     else if (shapes[i] is MyEllipse)
                     {
-                        MyEllipse ellipse = (MyEllipse)shapes[i];
+                        MyEllipse ellipse = shapes[i] as MyEllipse;
                         path.AddEllipse(
                             new Rectangle(
                                 ellipse.pointHead.X, 
@@ -61,7 +61,7 @@ namespace Paint.Model
                     }
                     else if (shapes[i] is MyRectangle)
                     {
-                        MyRectangle rect = (MyRectangle)shapes[i];
+                        MyRectangle rect = shapes[i] as MyRectangle;
                         path.AddRectangle(
                             new Rectangle(
                                 rect.pointHead.X, 
@@ -73,12 +73,12 @@ namespace Paint.Model
                     }
                     else if (shapes[i] is MyPolygon)
                     {
-                        MyPolygon polygon = (MyPolygon)shapes[i];
-                        path.AddPolygon(polygon.points.ToArray());
+                        MyPolygon polygon = shapes[i] as MyPolygon;
+                        path.AddPolygon(polygon.Points.ToArray());
                     }
                     else if (shapes[i] is GroupShape)
                     {
-                        GroupShape group = (GroupShape)shapes[i];
+                        GroupShape group = shapes[i] as GroupShape;
                         for (int j = 0; j < group.graphicsPaths.Length; j++)
                         {
                             path.AddPath(group.graphicsPaths[j], false);
@@ -136,7 +136,7 @@ namespace Paint.Model
                     }
                     else if (shapes[i] is GroupShape)
                     {
-                        GroupShape group = (GroupShape)shapes[i];
+                        GroupShape group = shapes[i] as GroupShape;
                         group.DrawShape(g);
                     }
                     else
@@ -191,7 +191,7 @@ namespace Paint.Model
                     }
                     else if (shapes[i] is GroupShape)
                     {
-                        GroupShape group = (GroupShape)shapes[i];
+                        GroupShape group = shapes[i] as GroupShape;
                         return group.isHit(p);
                     }
                 }
@@ -219,7 +219,7 @@ namespace Paint.Model
             {
                 if (shapes[i] is GroupShape)
                 {
-                    GroupShape group = (GroupShape)shapes[i];
+                    GroupShape group = shapes[i] as GroupShape;
                     group.MoveShape(distance);
                 }
                 else

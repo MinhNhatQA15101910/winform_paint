@@ -6,12 +6,12 @@ namespace Paint.Model
 {
     public class MyPolygon:Shape
     {
-        public List<Point> points;
+        public List<Point> Points { get; set; }
 
         public MyPolygon()
         {
             name = "Polygon";
-            points = new List<Point>();
+            Points = new List<Point>();
         }
         public override object Clone()
         {
@@ -25,7 +25,7 @@ namespace Paint.Model
                 contourWidth = contourWidth,
                 isFill = isFill
             };
-            points.ForEach(point => polygon.points.Add(point));
+            Points.ForEach(point => polygon.Points.Add(point));
             return polygon;
         }
         public override void DrawShape(Graphics g)
@@ -43,7 +43,7 @@ namespace Paint.Model
                 {
                     using (Brush brush = new SolidBrush(color))
                     {
-                        if (points.Count < 3)
+                        if (Points.Count < 3)
                         {
                             using (Pen pen = new Pen(color, contourWidth))
                             {
@@ -82,13 +82,13 @@ namespace Paint.Model
             get
             {
                 GraphicsPath path = new GraphicsPath();
-                if (points.Count < 3)
+                if (Points.Count < 3)
                 {
-                    path.AddLine(points[0], points[1]);
+                    path.AddLine(Points[0], Points[1]);
                 }
                 else
                 {
-                    path.AddPolygon(points.ToArray());
+                    path.AddPolygon(Points.ToArray());
                 }
 
                 return path;
@@ -97,17 +97,17 @@ namespace Paint.Model
         public override void MoveShape(Point distance)
         {
             base.MoveShape(distance);
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < Points.Count; i++)
             {
-                points[i] = new Point(points[i].X + distance.X, points[i].Y + distance.Y);
+                Points[i] = new Point(Points[i].X + distance.X, Points[i].Y + distance.Y);
             }
         }
         public override int isHitControlsPoint(Point p)
         {
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < Points.Count; i++)
             {
                 GraphicsPath path = new GraphicsPath();
-                path.AddRectangle(new Rectangle(points[i].X - 4, points[i].Y - 4, 8, 8));
+                path.AddRectangle(new Rectangle(Points[i].X - 4, Points[i].Y - 4, 8, 8));
 
                 if (path.IsVisible(p)) return i;
             }
@@ -117,7 +117,7 @@ namespace Paint.Model
         {
             int deltaX = pointCurrent.X - previous.X;
             int deltaY = pointCurrent.Y - previous.Y;
-            points[index] = new Point(points[index].X + deltaX, points[index].Y + deltaY);
+            Points[index] = new Point(Points[index].X + deltaX, Points[index].Y + deltaY);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Paint.Presenter;
+﻿using Paint.IPresenter;
+using Paint.Presenter;
 using Paint.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,43 +9,45 @@ using System.Windows.Forms;
 
 namespace Paint
 {
-    public partial class Form1 : Form, ViewPaint
+    public partial class Form1 : Form, IViewPaint
     {
-        private PresenterAlter presenterAlter;
-        private PresenterDraw presenterDraw;
-        private PresenterUpdate presenterUpdate;
-        private Graphics gr;
+        private readonly IPresenterAlter _presenterAlter;
+        private readonly IPresenterDraw _presenterDraw;
+        private readonly IPresenterUpdate _presenterUpdate;
+        private readonly Graphics gr;
 
         public Form1()
         {
             InitializeComponent();
 
-            presenterAlter = new PresenterAlterImp(this);
-            presenterDraw = new PresenterDrawImp(this);
-            presenterUpdate = new PresenterUpdateImp(this);
-            presenterUpdate.onClickSelectColor(pic_color.BackColor, gr);
-            presenterUpdate.onClickSelectSize(tb_lineSize.Value + 1);
+            _presenterAlter = new PresenterAlter(this);
+            _presenterDraw = new PresenterDraw(this);
+            _presenterUpdate = new PresenterUpdate(this);
+            _presenterUpdate.onClickSelectColor(pic_color.BackColor, gr);
+            _presenterUpdate.onClickSelectSize(tb_lineSize.Value + 1);
+
+            gr = CreateGraphics();
         }
 
         private void btn_rect_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawRectangle();
+            _presenterDraw.onClickDrawRectangle();
         }
 
         private void btn_line_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawLine();
+            _presenterDraw.onClickDrawLine();
         }
 
         private void pic_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            presenterDraw.GetDrawing(e.Graphics);
+            _presenterDraw.GetDrawing(e.Graphics);
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickClearAll(pic);
+            _presenterAlter.onClickClearAll(pic);
         }
 
         private void btn_color_Click(object sender, EventArgs e)
@@ -52,13 +55,13 @@ namespace Paint
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                presenterUpdate.onClickSelectColor(colorDialog.Color, gr);
+                _presenterUpdate.onClickSelectColor(colorDialog.Color, gr);
             }
         }
 
         private void btn_ellipse_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawEllipse();
+            _presenterDraw.onClickDrawEllipse();
         }
 
         private void color_picker_MouseClick(object sender, MouseEventArgs e)
@@ -66,64 +69,64 @@ namespace Paint
             Point point = HelpFunction.SetPoint(color_picker, e.Location);
             pic_color.BackColor = ((Bitmap)color_picker.Image).GetPixel(point.X, point.Y);
 
-            presenterUpdate.onClickSelectColor(pic_color.BackColor, gr);
+            _presenterUpdate.onClickSelectColor(pic_color.BackColor, gr);
         }
 
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
-            presenterDraw.onClickMouseDown(e.Location);
+            _presenterDraw.onClickMouseDown(e.Location);
         }
 
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
             lbl_location.Text = e.Location.X + ", " + (e.Location.Y - 146) + "px";
-            presenterDraw.onClickMouseMove(e.Location);
+            _presenterDraw.onClickMouseMove(e.Location);
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
-            presenterDraw.onClickStopDrawing(e.Button);
+            _presenterDraw.onClickStopDrawing(e.Button);
         }
 
         private void btn_fill_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            presenterUpdate.onClickSelectFill(btn, gr);
+            _presenterUpdate.onClickSelectFill(btn, gr);
         }
 
         private void btn_open_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickOpenImage(pic);
+            _presenterAlter.onClickOpenImage(pic);
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickSaveImage(pic);
+            _presenterAlter.onClickSaveImage(pic);
         }
 
         private void btn_new_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickNewImage(pic);
+            _presenterAlter.onClickNewImage(pic);
         }
 
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
-            presenterDraw.onClickMouseUp();
+            _presenterDraw.onClickMouseUp();
         }
 
         private void btn_eraser_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawEraser();
+            _presenterDraw.onClickDrawEraser();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            presenterAlter.onUseKeyStrokes(pic, e.KeyCode);
+            _presenterAlter.onUseKeyStrokes(pic, e.KeyCode);
         }
 
         private void btn_pencil_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawPen();
+            _presenterDraw.onClickDrawPen();
         }
 
         public void RefreshDrawing()
@@ -138,17 +141,17 @@ namespace Paint
 
         private void btn_group_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickDrawGroup();
+            _presenterAlter.onClickDrawGroup();
         }
 
         private void btn_polygon_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawPolygon();
+            _presenterDraw.onClickDrawPolygon();
         }
 
         private void btn_curve_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawBezier();
+            _presenterDraw.onClickDrawBezier();
         }
 
         public void MovingControlPoint(Model.Shape shape, Point pointCurrent, Point previous, int indexPoint)
@@ -165,22 +168,22 @@ namespace Paint
 
         private void btn_ungroup_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickDrawUngroup();
+            _presenterAlter.onClickDrawUngroup();
         }
 
         private void btn_delete_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickDeleteShape();
+            _presenterAlter.onClickDeleteShape();
         }
 
         private void btn_select_Click(object sender, EventArgs e)
         {
-            presenterUpdate.onClickSelectMode();
+            _presenterUpdate.onClickSelectMode();
         }
 
         private void tb_lineSize_Scroll(object sender, EventArgs e)
         {
-            presenterUpdate.onClickSelectSize(tb_lineSize.Value + 1);
+            _presenterUpdate.onClickSelectSize(tb_lineSize.Value + 1);
         }
 
         public void SetDrawing(Model.Shape shape, Graphics g)
@@ -219,17 +222,17 @@ namespace Paint
 
         private void btn_copy_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickCopyShape();
+            _presenterAlter.onClickCopyShape();
         }
 
         private void btn_cut_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickCutShape();
+            _presenterAlter.onClickCutShape();
         }
 
         private void btn_paste_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickPasteShape();
+            _presenterAlter.onClickPasteShape();
         }
     }
 }

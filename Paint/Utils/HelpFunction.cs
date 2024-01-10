@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Paint.Utils
 {
-    public class HelpFunction
+    public static class HelpFunction
     {
         public static Point SetPoint(PictureBox pb, Point pt)
         {
