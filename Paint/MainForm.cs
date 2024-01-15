@@ -251,7 +251,7 @@ namespace Paint
             WebClient webClient = new WebClient();
             var client = new WebClient();
 
-            if (!webClient.DownloadString("").Contains("1.0.0"))
+            if (!webClient.DownloadString("https://www.dropbox.com/scl/fi/5ikapyerwo2g7ywx7eb0d/update.txt?rlkey=pw7doofjlhw0gfbz8g3wy3ied&dl=1").Contains("1.0.0"))
             {
                 var result = MessageBox.Show("New update available! Do you want to install it?", "Paint", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -263,7 +263,7 @@ namespace Paint
                             File.Delete(@".\PaintSetup.msi");
                         }
 
-                        client.DownloadFile("", @"PaintSetup.zip");
+                        client.DownloadFile("https://www.dropbox.com/scl/fi/v188aumt4c54c9nwc4elv/PaintSetup.rar?rlkey=61fekym9s84xwflwimn9refy1&dl=1", @"PaintSetup.zip");
                         string zipPath = @".\PaintSetup.zip";
                         string extractPath = @".\";
                         ZipFile.ExtractToDirectory(zipPath, extractPath);
