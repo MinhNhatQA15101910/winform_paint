@@ -281,6 +281,10 @@ namespace Paint
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("Your application is up to date!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
         #endregion
     }
