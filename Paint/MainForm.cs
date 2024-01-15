@@ -3,8 +3,12 @@ using Paint.Presenter;
 using Paint.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.IO.Compression;
+using System.Net;
 using System.Windows.Forms;
 
 namespace Paint
@@ -240,6 +244,43 @@ namespace Paint
         private void OnBtnPasteClicked(object sender, EventArgs e)
         {
             _presenterAlter.OnClickPasteShape();
+        }
+
+        private void OnUpdateClicked(object sender, EventArgs e)
+        {
+            WebClient webClient = new WebClient();
+            var client = new WebClient();
+
+            if (!webClient.DownloadString("").Contains("1.0.0"))
+            {
+                var result = MessageBox.Show("New update available! Do you want to install it?", "Paint", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        if (File.Exists(@".\PaintSetup.msi"))
+                        {
+                            File.Delete(@".\PaintSetup.msi");
+                        }
+
+                        client.DownloadFile("", @"PaintSetup.zip");
+                        string zipPath = @".\PaintSetup.zip";
+                        string extractPath = @".\";
+                        ZipFile.ExtractToDirectory(zipPath, extractPath);
+
+                        Process process = new Process();
+                        process.StartInfo.FileName = "msiexec";
+                        process.StartInfo.Arguments = string.Format("/i PaintSetup.msi");
+
+                        Close();
+                        process.Start();
+                    }
+                    catch
+                    {
+                        // Do nothing
+                    }
+                }
+            }
         }
         #endregion
     }

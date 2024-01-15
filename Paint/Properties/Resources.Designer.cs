@@ -203,6 +203,16 @@ namespace Paint.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_orange_dot {
+            get {
+                object obj = ResourceManager.GetObject("ic_orange_dot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ic_paste {
             get {
                 object obj = ResourceManager.GetObject("ic_paste", resourceCulture);
@@ -256,6 +266,16 @@ namespace Paint.Properties {
         internal static System.Drawing.Bitmap ic_ungroup {
             get {
                 object obj = ResourceManager.GetObject("ic_ungroup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_update {
+            get {
+                object obj = ResourceManager.GetObject("ic_update", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1563,6 +1563,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C9E6F2D739BEF9B1FBD48F7393D0A714"
+        "OwnerKey" = "8:_D8EF1A6D1E3B407D993A23CF610967D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CDB922C71FFC39111127FB3F48BD1825"
         "OwnerKey" = "8:_D8EF1A6D1E3B407D993A23CF610967D4"
         "MsmSig" = "8:_UNDEFINED"
@@ -2105,6 +2111,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C78533E2F64307EF1B798FDB28CCF751"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C9E6F2D739BEF9B1FBD48F7393D0A714"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -6554,6 +6566,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C9E6F2D739BEF9B1FBD48F7393D0A714"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51"
+                "ScatterAssemblies"
+                {
+                    "_C9E6F2D739BEF9B1FBD48F7393D0A714"
+                    {
+                    "Name" = "8:System.ValueTuple.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.ValueTuple.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_61446F927EF7424AB8938B40404C6E12"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CDB922C71FFC39111127FB3F48BD1825"
             {
             "AssemblyRegister" = "3:1"
@@ -7441,7 +7484,7 @@
         "UpgradeCode" = "8:{713992C1-5F87-4BA1-A1BF-B52E0F94D176}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
@@ -8080,7 +8123,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D8EF1A6D1E3B407D993A23CF610967D4"
             {
-            "SourcePath" = "8:..\\Paint\\obj\\Release\\Paint.exe"
+            "SourcePath" = "8:..\\Paint\\obj\\Debug\\Paint.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61446F927EF7424AB8938B40404C6E12"

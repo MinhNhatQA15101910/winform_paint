@@ -61,6 +61,7 @@
             this.colorPicker = new System.Windows.Forms.PictureBox();
             this.btnColorDisplay = new System.Windows.Forms.Button();
             this.pnlFooter = new System.Windows.Forms.Panel();
+            this.picUpdate = new System.Windows.Forms.PictureBox();
             this.picLocation = new System.Windows.Forms.PictureBox();
             this.lblLocation = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -73,6 +74,7 @@
             this.pnlDrawTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorPicker)).BeginInit();
             this.pnlFooter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUpdate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLocation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
@@ -592,6 +594,7 @@
             // pnlFooter
             // 
             this.pnlFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnlFooter.Controls.Add(this.picUpdate);
             this.pnlFooter.Controls.Add(this.picLocation);
             this.pnlFooter.Controls.Add(this.lblLocation);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -599,6 +602,18 @@
             this.pnlFooter.Name = "pnlFooter";
             this.pnlFooter.Size = new System.Drawing.Size(1034, 41);
             this.pnlFooter.TabIndex = 1;
+            // 
+            // picUpdate
+            // 
+            this.picUpdate.BackgroundImage = global::Paint.Properties.Resources.ic_update;
+            this.picUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picUpdate.Location = new System.Drawing.Point(1002, 9);
+            this.picUpdate.Name = "picUpdate";
+            this.picUpdate.Size = new System.Drawing.Size(20, 20);
+            this.picUpdate.TabIndex = 2;
+            this.picUpdate.TabStop = false;
+            this.toolTip.SetToolTip(this.picUpdate, "Update");
+            this.picUpdate.Click += new System.EventHandler(this.OnUpdateClicked);
             // 
             // picLocation
             // 
@@ -665,6 +680,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.colorPicker)).EndInit();
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUpdate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLocation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
@@ -708,6 +724,7 @@
         private System.Windows.Forms.Button btnPaste;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnCut;
+        private System.Windows.Forms.PictureBox picUpdate;
     }
 }
 
